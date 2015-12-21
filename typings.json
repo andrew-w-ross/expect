@@ -3,6 +3,7 @@
   "ambient":false,
   "author":"Andrew Ross",
   "description":"Typings for the expect library https://github.com/mjackson/expect",
+  "main":"expect.d.ts",
   "dependencies": {},
   "devDependencies": {}
 }
