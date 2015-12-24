@@ -1,5 +1,5 @@
 
-declare module expect {
+declare module "expect" {
 
     interface IExpectation<TExpected> {
         /**
@@ -227,7 +227,7 @@ declare module expect {
          */
         extend(extension: Object);
     }
+    
+    let expected: IExpect;
+    export = expected;
 }
-
-declare let expected: expect.IExpect;
-export = expected;
