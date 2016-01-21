@@ -1,7 +1,7 @@
 
 declare module expect {
 
-    interface IExpectation<TExpected> {
+    export interface IExpectation<TExpected> {
         /**
          * Asserts the given object is truthy.
          */
@@ -35,7 +35,7 @@ declare module expect {
 
     }
 
-    interface IFunctionExpectation<TExpected extends Function> extends IExpectation<TExpected> {
+    export interface IFunctionExpectation<TExpected extends Function> extends IExpectation<TExpected> {
         /**
          * Asserts that the given block throws an error. The error argument may be a constructor (to test using instanceof), or a string/RegExp to test against error.message.
          */
@@ -71,7 +71,7 @@ declare module expect {
         toNotBeA(constructor: Function | string, message?: string): this;
     }
 
-    interface IStringExpectation extends IExpectation<string> {
+    export interface IStringExpectation extends IExpectation<string> {
         /**
          * Asserts the given string matches pattern, which must be a RegExp.
          */
@@ -98,7 +98,7 @@ declare module expect {
         toNotContain(value: string, message?: string): this;
     }
 
-    interface INumberExpectation extends IExpectation<number> {
+    export interface INumberExpectation extends IExpectation<number> {
         /**
          * Asserts the given number is less than value.
          */
@@ -111,7 +111,7 @@ declare module expect {
 
     }
 
-    interface IArrayExpectation<TElement> extends IExpectation<TElement[]> {
+    export interface IArrayExpectation<TElement> extends IExpectation<TElement[]> {
         /**
          * Asserts the given array contains value. The comparator function, if given, should compare two objects and either return false or throw if they are not equal. It defaults to assert.deepEqual. 
          * */
@@ -133,11 +133,11 @@ declare module expect {
         toNotContain(value: TElement, comparator?: IComparator<TElement>, message?: string): this;
     }
 
-    interface IComparator<TElement> {
+    export interface IComparator<TElement> {
         (comparer: TElement, comparee: TElement): boolean;
     }
 
-    interface ISpyExpectation extends IExpectation<ISpy> {
+    export interface ISpyExpectation extends IExpectation<ISpy> {
         /**
          * Has the spy been called?
          */
@@ -149,7 +149,7 @@ declare module expect {
         toHaveBeenCalledWith(...args: any[]): this;
     }
 
-    interface ISpy {
+    export interface ISpy {
         calls: ICall[];
 
         /**
@@ -178,13 +178,22 @@ declare module expect {
         andThrow(error: Error): this;
     }
 
-    interface ICall {
+    export interface ICall {
         context: any;
 
         argument: any[];
     }
+	
+	/**
+	 * This is my best attempt at emulating the typing required for expect extend.
+	 * Unfortunately you'll still have to extend with IExpect interface or one of the 
+	 * Expectation interfaces to 
+	 */
+	export interface IExtension{
+		[assertionMethod:string] : Function;
+	}
 
-    interface IExpect {
+    export interface IExpect {
         (compare: number): INumberExpectation;
         (compare: string): IStringExpectation;
         <TExpected extends Function>(block: TExpected): IFunctionExpectation<TExpected>;
@@ -217,7 +226,9 @@ declare module expect {
         assert(passed: boolean, message: string, actual: any);
         
         /**
-         * You can add your own assertions using expect.extend and expect.assert 
+         * You can add your own assertions using expect.extend and expect.assert
+		 * A note here is that you'll have to extend the IExpect interface or one of the IExpectation interfaces have a look at
+		 * typings-expect-element lib for an example 
          * @example
          * expect.extend({
          *   toBeAColor() {
@@ -228,13 +239,15 @@ declare module expect {
          *   )
          *  }
          * })
-         *expect('#ff00ff').toBeAColor()
+         * expect('#ff00ff').toBeAColor()
          */
-        extend(extension: Object);
+        extend(extension: IExtension | Object);
     }
     
     
 }
 
-declare let expected: expect.IExpect;
-export = expected;
+declare module "expect"{
+	let expect: expect.IExpect;
+	export = expect;	
+}
