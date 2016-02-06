@@ -251,5 +251,7 @@ declare module expect {
     }
 }
 
-declare let expect: expect.IExpect;
-export = expect;
+declare module "expect"{
+	let expect: expect.IExpect;
+	export = expect;	
+}
