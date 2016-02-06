@@ -1,5 +1,5 @@
 /// <reference path="expect.d.ts" />
-import * as expect from "./expect"
+import * as expect from "expect"
 
 class Test {}
 
