@@ -34,7 +34,7 @@ declare module expect {
 
 
     }
-
+	
 	export interface IObjectExpectation<TExpected extends Object> extends IExpectation<TExpected> {
 		/**
          * Asserts the given object is an instanceof constructor.
@@ -70,7 +70,7 @@ declare module expect {
         /**
          * Asserts that the given block does not throw.
          */
-        toNotThrow(message?: string): this;
+        toNotThrow(message?: string): this; 
     }
 
     export interface IStringExpectation extends IExpectation<string> {
@@ -144,7 +144,7 @@ declare module expect {
          * Has the spy been called?
          */
         toHaveBeenCalled(message?: string): this;
-
+		
 		toNotHaveBeenCalled(message?: string): this;
 
         /**
@@ -202,7 +202,7 @@ declare module expect {
         (compare: string): IStringExpectation;
 		(spy: ISpy): ISpyExpectation;
         <TExpected extends Function>(block: TExpected): IFunctionExpectation<TExpected>;
-		<TExpected extends Object>(object: TExpected): IObjectExpectation<TExpected>;
+		<TExpected extends Object>(object: TExpected): IObjectExpectation<TExpected>;        
         <TExpected>(compare: TExpected): IExpectation<TExpected>;
 
         /**
@@ -251,7 +251,5 @@ declare module expect {
     }
 }
 
-declare module "expect" {
-	let expect: expect.IExpect;
-	export = expect;
-}
+declare let expect: expect.IExpect;
+export = expect;
