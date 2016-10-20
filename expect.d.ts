@@ -49,6 +49,21 @@ declare module expect {
          * Asserts the typeof the given object not the string.
          */
         toNotBeA(constructor: Function | string, message?: string): this;
+
+        /**
+         * Asserts the given object is an instanceof constructor.
+         * or
+         * Asserts the typeof the given object is string.
+         */
+        toBeAn(constructor: Function | string, message?: string): this;
+
+
+        /**
+         * Asserts the given object is an instanceof constructor.
+         * or
+         * Asserts the typeof the given object is string.
+         */
+        toNotBeAn(constructor: Function | string, message?: string): this;
 	}
 
     export interface IFunctionExpectation<TExpected extends Function> extends IExpectation<TExpected> {
@@ -219,7 +234,7 @@ declare module expect {
         /**
          * Restores all spies created with expect.spyOn(). This is the same as calling spy.restore() on all spies created.
          */
-        restoreSpies();
+        restoreSpies():void;
 
         /**
          * Determins if the object is a spy.
@@ -229,7 +244,7 @@ declare module expect {
         /**
          * Does an assertion
          */
-        assert(passed: boolean, message: string, actual: any);
+        assert(passed: boolean, message: string, actual: any):void;
 
         /**
          * You can add your own assertions using expect.extend and expect.assert
@@ -247,7 +262,7 @@ declare module expect {
          * })
          * expect('#ff00ff').toBeAColor()
          */
-        extend(extension: IExtension | Object);
+        extend(extension: IExtension | Object) : any;
     }
 }
 
